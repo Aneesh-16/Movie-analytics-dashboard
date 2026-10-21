@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: movie-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      - key: DATABASE_URL
+        sync: false          # paste your Supabase connection string in the Render dashboard
+      - key: SECRET_KEY
+        generateValue: true
+      - key: CORS_ORIGINS
+        sync: false          # comma-separated frontend origins (your dashboard + partner site)
